@@ -10,27 +10,21 @@ import openpyxl
 import os
 import time
 
-#Calculate the start time
 start_time = time.time()
 
-# Connect to CATIA V5
 catia = win32com.client.Dispatch("CATIA.Application")
 
-# Current Directory
 current_directory = os.getcwd()
 
-# Assing the necessary variables
 active_document = catia.activedocument.name
 print("Active Document is: ", active_document)
 
-# Check if catia.ActiveDocument
 if catia.ActiveDocument is not None:
     active_document = catia.ActiveDocument.name
     # Now you can work with 'active_document'
 else:
     print("No active document in CATIA.")
 
-# print(current_directory + "\\" + active_document)
 document_path = current_directory + "\\" + active_document
 print("Assembly path: " "r'" + document_path)
 product_document = catia.Documents.Open(document_path)
@@ -69,7 +63,6 @@ def analyze_subparts(component):
 
     for child in component.Products:
 
-        # Access properties (e.g., name, weight) for each subpart
         name = child.Name
         weight = None
         inertia_child = child.GetTechnologicalObject("Inertia")
@@ -99,7 +92,6 @@ def analyze_subparts(component):
 # Start the analysis
 analyze_subparts(product)
 
-# Calculate end time and total duration til end of the code
 end_time = time.time()
 pass_time = end_time - start_time
 pass_time = int(pass_time)
